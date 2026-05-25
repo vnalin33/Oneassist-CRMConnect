@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@800;900&display=swap');
+
+.app-logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.app-logo-icon-container {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+/* Slightly enlarge the logo in light theme for better visual weight */
+.app-logo-wrapper[data-theme="light"] .app-logo-icon-container {
+  transform: scale(1.1);
+}
+
+.app-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  filter: drop-shadow(0 4px 8px rgba(108, 92, 231, 0.2));
+}
+
+.app-logo-text-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.app-logo-brand {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #6C5CE7 0%, #00B4D8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+}
+
+.app-logo-sub {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  margin-top: 0px;
+  background: linear-gradient(90deg, #6C5CE7 0%, #00B4D8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  padding-left: 2px;
+}
+
+/* Modifier for Login screen where it might be larger */
+.app-logo-wrapper.login-mode {
+  flex-direction: row;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.app-logo-wrapper.login-mode .app-logo-icon-container {
+  width: 64px;
+  height: 64px;
+}
+
+.app-logo-wrapper.login-mode .app-logo-brand {
+  font-size: 1.75rem;
+}
+
+.app-logo-wrapper.login-mode .app-logo-sub {
+  font-size: 0.65rem;
+  letter-spacing: 4.5px;
+}

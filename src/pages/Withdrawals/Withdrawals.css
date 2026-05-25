@@ -1,0 +1,25 @@
+/* ============================================
+   Withdrawal Requests Page Styles
+   Reuses the same design system as Invoices
+   ============================================ */
+
+/* Import the shared Invoices styles — same components are used */
+@import '../Invoices/Invoices.css';
+
+/* Withdrawal-specific page class (maps to same structure) */
+.withdrawals-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Remarks cell truncation */
+.remarks-cell {
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-style: italic;
+}
