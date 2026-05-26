@@ -246,25 +246,7 @@ function Login() {
             </button>
           </form>
 
-          {/* Divider */}
-          <div className="login-divider">
-            <span className="divider-line"></span>
-            <span className="divider-text">or continue with</span>
-            <span className="divider-line"></span>
-          </div>
 
-          {/* Sign Up Link */}
-          <div className="login-signup">
-            <span>Don't have an account?</span>
-            <a
-              href="/register"
-              className="signup-link"
-              id="signup-link"
-              onClick={(e) => { e.preventDefault(); navigate('/register'); }}
-            >
-              Sign Up
-            </a>
-          </div>
         </div>
       </div>
     </div>

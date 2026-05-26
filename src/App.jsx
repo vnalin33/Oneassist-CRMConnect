@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -26,8 +27,19 @@ function RootRedirect() {
  * PublicRoute - Redirects authenticated users away from public auth pages
  */
 function PublicRoute({ children }) {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Navigate to="/dashboard" replace /> : children;
+  const { isAuthenticated, logout } = useAuth();
+  const hasChecked = useRef(false);
+
+  useEffect(() => {
+    if (!hasChecked.current) {
+      hasChecked.current = true;
+      if (isAuthenticated) {
+        logout();
+      }
+    }
+  }, [isAuthenticated, logout]);
+
+  return children;
 }
 
 /**
@@ -46,11 +58,7 @@ function App() {
           <Login />
         </PublicRoute>
       } />
-      <Route path="/register" element={
-        <PublicRoute>
-          <Register />
-        </PublicRoute>
-      } />
+      <Route path="/org-signup" element={<Register />} />
       <Route path="/forgot-password" element={
         <PublicRoute>
           <ForgotPassword />

@@ -1,11 +1,4 @@
--- Oneassist-CRMConnect Production Database Schema
--- Generated dynamically on 2026-05-26T05:00:35.463Z
--- Use this script to initialize the PostgreSQL database tables.
 
-
--- -----------------------------------------------------
--- Table Structure for `Connector`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS "Connector" (
   id                        SERIAL NOT NULL PRIMARY KEY,
   username                  CHARACTER VARYING(255) NOT NULL,
@@ -18,9 +11,6 @@ CREATE TABLE IF NOT EXISTS "Connector" (
   phone                     CHARACTER VARYING(20)
 );
 
--- -----------------------------------------------------
--- Table Structure for `connector`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS connector (
   id                        SERIAL NOT NULL PRIMARY KEY,
   name                      TEXT NOT NULL,
@@ -50,9 +40,6 @@ CREATE TABLE IF NOT EXISTS connector (
   account_holder_name       CHARACTER VARYING(255)
 );
 
--- -----------------------------------------------------
--- Table Structure for `users`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS users (
   id                        SERIAL NOT NULL PRIMARY KEY,
   name                      CHARACTER VARYING(100) NOT NULL,
@@ -68,9 +55,6 @@ CREATE TABLE IF NOT EXISTS users (
   reset_token_expiry        TIMESTAMP
 );
 
--- -----------------------------------------------------
--- Table Structure for `employeedetails`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS employeedetails (
   id                        SERIAL NOT NULL PRIMARY KEY,
   name                      CHARACTER VARYING(200),
@@ -102,9 +86,6 @@ CREATE TABLE IF NOT EXISTS employeedetails (
   image_data                BYTEA
 );
 
--- -----------------------------------------------------
--- Table Structure for `leadpersonaldetails`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS leadpersonaldetails (
   id                        SERIAL NOT NULL PRIMARY KEY,
   firstname                 CHARACTER VARYING(200),
@@ -151,9 +132,6 @@ CREATE TABLE IF NOT EXISTS leadpersonaldetails (
   sector_type               CHARACTER VARYING(255)
 );
 
--- -----------------------------------------------------
--- Table Structure for `invoice_requests`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS invoice_requests (
   id                        SERIAL NOT NULL PRIMARY KEY,
   connectorid               INTEGER,
@@ -198,9 +176,6 @@ CREATE TABLE IF NOT EXISTS invoice_requests (
   place_of_supply           CHARACTER VARYING(100)
 );
 
--- -----------------------------------------------------
--- Table Structure for `withdrawals`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS withdrawals (
   id                        SERIAL NOT NULL PRIMARY KEY,
   connector_id              INTEGER NOT NULL,
@@ -214,9 +189,6 @@ CREATE TABLE IF NOT EXISTS withdrawals (
   paid_date                 TIMESTAMP
 );
 
--- -----------------------------------------------------
--- Table Structure for `notifications`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS notifications (
   id                        SERIAL NOT NULL PRIMARY KEY,
   connectorid               INTEGER NOT NULL,
@@ -228,9 +200,7 @@ CREATE TABLE IF NOT EXISTS notifications (
   metadata                  JSONB DEFAULT '{}'::jsonb
 );
 
--- -----------------------------------------------------
--- Table Structure for `password_reset_tokens`
--- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS password_reset_tokens (
   id                        SERIAL NOT NULL PRIMARY KEY,
   email                     CHARACTER VARYING(255) NOT NULL,
@@ -240,9 +210,7 @@ CREATE TABLE IF NOT EXISTS password_reset_tokens (
   created_at                TIMESTAMP DEFAULT now()
 );
 
--- -----------------------------------------------------
--- Table Structure for `company_profile`
--- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS company_profile (
   id                        INTEGER NOT NULL DEFAULT 1,
   company_name              CHARACTER VARYING(255) DEFAULT ''::character varying,
@@ -257,9 +225,7 @@ CREATE TABLE IF NOT EXISTS company_profile (
   CONSTRAINT single_row CHECK (id = 1)
 );
 
--- -----------------------------------------------------
--- Table Structure for `leadtrackdetails`
--- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS leadtrackdetails (
   id                        SERIAL NOT NULL PRIMARY KEY,
   leadid                    INTEGER,

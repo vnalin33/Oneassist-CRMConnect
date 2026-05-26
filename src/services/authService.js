@@ -21,7 +21,7 @@ const authService = {
    * @returns {Promise<{user: object, token: string}>}
    */
   async register(userData) {
-    return api.post('/auth/register', userData);
+    return api.post('/auth/org-signup', userData);
   },
 
   /**

@@ -1,10 +1,10 @@
 
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8086/api';
+import { ENV } from '../env';
 
 class ApiService {
   constructor() {
-    this.baseUrl = API_BASE_URL;
+    this.baseUrl = ENV.API_BASE_URL;
   }
 
   getHeaders() {
@@ -30,7 +30,7 @@ class ApiService {
       const data = await response.json();
 
       if (!response.ok) {
-        if (response.status === 401) {
+        if (response.status === 401 && !endpoint.includes('/auth/login')) {
           window.dispatchEvent(new Event('crm-logout'));
         }
         throw {

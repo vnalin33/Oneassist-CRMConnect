@@ -10,8 +10,8 @@ const { loginValidation, registerValidation } = require('../middleware/validatio
 // POST /api/auth/login
 router.post('/login', loginValidation, AuthController.login);
 
-// POST /api/auth/register
-router.post('/register', registerValidation, AuthController.register);
+// POST /api/auth/org-signup
+router.post('/org-signup', registerValidation, AuthController.register);
 
 // GET /api/auth/validate (protected)
 router.get('/validate', authMiddleware, AuthController.validate);

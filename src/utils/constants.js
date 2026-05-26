@@ -5,7 +5,7 @@ export const COMPANY_NAME = 'One Assist Technologies';
 
 export const ROUTES = {
   LOGIN: '/login',
-  REGISTER: '/register',
+  REGISTER: '/org-signup',
   FORGOT_PASSWORD: '/forgot-password',
   DASHBOARD: '/dashboard',
   LEADS: '/leads',
@@ -19,7 +19,7 @@ export const ROUTES = {
 export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth/login',
-    REGISTER: '/auth/register',
+    REGISTER: '/auth/org-signup',
     FORGOT_PASSWORD: '/auth/forgot-password',
     RESET_PASSWORD: '/auth/reset-password',
     VALIDATE: '/auth/validate',

@@ -80,7 +80,7 @@ function Register() {
     setIsSubmitting(true);
 
     try {
-      const response = await api.post('/auth/register', {
+      const response = await api.post('/auth/org-signup', {
         name: formData.name.trim(),
         email: formData.email.trim().toLowerCase(),
         password: formData.password,
