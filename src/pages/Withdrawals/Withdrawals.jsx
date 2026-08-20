@@ -152,6 +152,7 @@ function Withdrawals() {
   const { theme } = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [amountRange, setAmountRange] = useState('all');
   const [requests, setRequests] = useState([]);
   const [stats, setStats] = useState({ total: 0, pending: 0, approved: 0, rejected: 0, paid: 0, totalPaidAmount: 0, totalPendingAmount: 0 });
   const [page, setPage] = useState(1);
@@ -164,25 +165,40 @@ function Withdrawals() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
+      const listUrl = `/withdrawals?status=${statusFilter}&search=${searchTerm}&page=${page}&limit=${LIMIT}`;
       const [listRes, statsRes] = await Promise.all([
-        api.get(`/withdrawals?status=${statusFilter}&search=${searchTerm}&page=${page}&limit=${LIMIT}`),
+        api.get(listUrl),
         api.get('/withdrawals/stats'),
       ]);
-      setRequests(listRes.rows || []);
-      setTotalCount(listRes.total || 0);
+      // Apply client-side amount range filter
+      let rows = listRes.rows || [];
+      if (amountRange !== 'all') {
+        rows = rows.filter(r => {
+          const amt = parseFloat(r.amount) || 0;
+          switch (amountRange) {
+            case 'under-5k': return amt < 5000;
+            case '5k-25k': return amt >= 5000 && amt < 25000;
+            case '25k-1l': return amt >= 25000 && amt < 100000;
+            case 'above-1l': return amt >= 100000;
+            default: return true;
+          }
+        });
+      }
+      setRequests(rows);
+      setTotalCount(amountRange !== 'all' ? rows.length : (listRes.total || 0));
       if (statsRes.data) setStats(statsRes.data);
     } catch (err) {
       console.error('Failed to fetch withdrawals:', err);
     } finally {
       setLoading(false);
     }
-  }, [statusFilter, searchTerm, page]);
+  }, [statusFilter, searchTerm, page, amountRange]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
   useEffect(() => {
     setPage(1);
-  }, [searchTerm, statusFilter]);
+  }, [searchTerm, statusFilter, amountRange]);
 
   const handleExport = async () => {
     try {
@@ -340,6 +356,17 @@ function Withdrawals() {
                 onChange={(e) => { setSearchTerm(e.target.value); setPage(1); }}
               />
             </div>
+            <select
+              value={amountRange}
+              onChange={(e) => setAmountRange(e.target.value)}
+              className="table-filter-select"
+            >
+              <option value="all">All Amounts</option>
+              <option value="under-5k">Under ₹5,000</option>
+              <option value="5k-25k">₹5K – ₹25K</option>
+              <option value="25k-1l">₹25K – ₹1 Lakh</option>
+              <option value="above-1l">Above ₹1 Lakh</option>
+            </select>
           </div>
           <div className="table-actions">
             <button className="btn-outline btn-export" onClick={handleExport}>

@@ -8,7 +8,7 @@ import './index.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter basename="/crmconnect">
+    <BrowserRouter basename="/onebind">
       <ThemeProvider>
         <AuthProvider>
           <App />

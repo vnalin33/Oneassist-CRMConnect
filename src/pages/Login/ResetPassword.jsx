@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
+import { ENV } from '../../env';
 import Logo from '../../components/common/Logo';
 import './Login.css';
 
@@ -42,7 +43,7 @@ function ResetPassword() {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8086/api/auth/reset-password', {
+      const response = await fetch(`${ENV.API_BASE_URL}/auth/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, password }),

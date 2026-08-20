@@ -1,6 +1,6 @@
 
 
-export const APP_NAME = 'CRMConnect';
+export const APP_NAME = 'Onebind';
 export const COMPANY_NAME = 'One Assist Technologies';
 
 export const ROUTES = {

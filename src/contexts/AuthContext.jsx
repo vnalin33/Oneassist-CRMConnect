@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
     logoutTimerRef.current = setTimeout(() => {
       logout();
       localStorage.setItem('crm-session-expired', 'true');
-      window.location.href = '/crmconnect/login';
+      window.location.href = '/onebind/login';
     }, SESSION_TIMEOUT);
   }, [logout]);
 
@@ -57,7 +57,7 @@ export function AuthProvider({ children }) {
     const handleCrmLogout = () => {
       logout();
       localStorage.setItem('crm-session-expired', 'true');
-      window.location.href = '/crmconnect/login';
+      window.location.href = '/onebind/login';
     };
     window.addEventListener('crm-logout', handleCrmLogout);
     return () => window.removeEventListener('crm-logout', handleCrmLogout);

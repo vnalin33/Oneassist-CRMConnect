@@ -23,9 +23,7 @@ function RootRedirect() {
   return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />;
 }
 
-/**
- * PublicRoute - Redirects authenticated users away from public auth pages
- */
+
 function PublicRoute({ children }) {
   const { isAuthenticated, logout } = useAuth();
   const hasChecked = useRef(false);
@@ -42,10 +40,7 @@ function PublicRoute({ children }) {
   return children;
 }
 
-/**
- * App - Root application component
- * Manages routing between public and protected pages
- */
+
 function App() {
   return (
     <Routes>

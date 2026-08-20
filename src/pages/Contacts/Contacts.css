@@ -362,6 +362,41 @@
   border-color: #6C5CE7;
 }
 
+.table-date-filter {
+  min-width: 140px;
+  font-family: inherit;
+}
+
+.table-date-filter::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+[data-theme="dark"] .table-date-filter::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.filter-clear-btn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  border: none;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.filter-clear-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
 @media (max-width: 768px) {
   .table-toolbar-left {
     flex-direction: column;

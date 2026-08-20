@@ -18,6 +18,7 @@ function Connectors() {
   const { theme } = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('newest');
   const [connectors, setConnectors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -35,7 +36,7 @@ function Connectors() {
 
   useEffect(() => {
     setPage(1);
-  }, [searchTerm, statusFilter]);
+  }, [searchTerm, statusFilter, sortBy]);
 
   const fetchConnectors = async () => {
     setLoading(true);
@@ -112,9 +113,19 @@ function Connectors() {
       c.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       c.phone?.includes(searchTerm);
     
-    if (statusFilter === 'all') return matchesSearch;
-    const isActive = c.isactive === 1 || c.isactive === true;
-    return matchesSearch && (statusFilter === 'active' ? isActive : !isActive);
+    const matchesStatus = statusFilter === 'all' || (statusFilter === 'active' ? (c.isactive === 1 || c.isactive === true) : !(c.isactive === 1 || c.isactive === true));
+
+    return matchesSearch && matchesStatus;
+  }).sort((a, b) => {
+    switch (sortBy) {
+      case 'name-asc': return (a.name || '').localeCompare(b.name || '');
+      case 'name-desc': return (b.name || '').localeCompare(a.name || '');
+      case 'connects': return (parseInt(b.total_connects) || 0) - (parseInt(a.total_connects) || 0);
+      case 'business': return (parseFloat(b.total_business) || 0) - (parseFloat(a.total_business) || 0);
+      case 'oldest': return new Date(a.created_at || 0) - new Date(b.created_at || 0);
+      case 'newest':
+      default: return new Date(b.created_at || 0) - new Date(a.created_at || 0);
+    }
   });
 
   const totalCount = filteredConnectors.length;
@@ -127,7 +138,7 @@ function Connectors() {
       <div className="page-header">
         <div className="page-title-group">
           <h1>Connectors</h1>
-          <p>Real-time performance from the connector table.</p>
+          <p>Real-time performance from the connector network.</p>
         </div>
       </div>
 
@@ -172,6 +183,18 @@ function Connectors() {
               <option value="all">All Statuses</option>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
+            </select>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="table-filter-select"
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="name-asc">Name A → Z</option>
+              <option value="name-desc">Name Z → A</option>
+              <option value="connects">Most Connects</option>
+              <option value="business">Highest Business</option>
             </select>
           </div>
           <div className="table-actions">

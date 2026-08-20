@@ -114,7 +114,7 @@ function Contacts() {
       <div className="page-header">
         <div className="page-title-group">
           <h1>Contact List</h1>
-          <p>Real-time lead data from leadpersonaldetails.</p>
+          <p>Track and manage all your leads in one place.</p>
         </div>
       </div>
 

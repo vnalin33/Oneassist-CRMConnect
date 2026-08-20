@@ -104,7 +104,7 @@ function Login() {
           {/* Welcome Text */}
           <div className="login-welcome">
             <h2 className="login-title" id="login-title">Welcome Back!</h2>
-            <p className="login-subtitle">Sign in to continue to CRMConnect</p>
+            <p className="login-subtitle">Sign in to continue to Onebind</p>
           </div>
 
           {/* API Error / Session Expired */}

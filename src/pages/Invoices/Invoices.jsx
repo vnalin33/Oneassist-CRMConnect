@@ -285,6 +285,7 @@ function Invoices() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
+  const [loanTypeFilter, setLoanTypeFilter] = useState('all');
   const [invoices, setInvoices] = useState([]);
   const [stats, setStats] = useState({ total: 0, pending: 0, approved: 0, rejected: 0, paid: 0 });
   const [page, setPage] = useState(1);
@@ -298,8 +299,10 @@ function Invoices() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
+      let listUrl = `/invoice-requests?status=${statusFilter}&search=${searchTerm}&page=${page}&limit=${LIMIT}&invoice_type=${typeFilter}`;
+      if (loanTypeFilter !== 'all') listUrl += `&loan_type=${encodeURIComponent(loanTypeFilter)}`;
       const [listRes, statsRes] = await Promise.all([
-        api.get(`/invoice-requests?status=${statusFilter}&search=${searchTerm}&page=${page}&limit=${LIMIT}&invoice_type=${typeFilter}`),
+        api.get(listUrl),
         api.get('/invoice-requests/stats'),
       ]);
       setInvoices(listRes.rows || []);
@@ -310,13 +313,13 @@ function Invoices() {
     } finally {
       setLoading(false);
     }
-  }, [statusFilter, searchTerm, page, typeFilter]);
+  }, [statusFilter, searchTerm, page, typeFilter, loanTypeFilter]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
   useEffect(() => {
     setPage(1);
-  }, [searchTerm, statusFilter, typeFilter]);
+  }, [searchTerm, statusFilter, typeFilter, loanTypeFilter]);
 
   const handleExport = async () => {
     try {
@@ -372,7 +375,7 @@ function Invoices() {
   const handleDownload = async (invoiceId) => {
     try {
       const token = localStorage.getItem('crm-token');
-      const response = await fetch(`${ENV.API_BASE_URL || 'http://localhost:8086/api'}/invoice-requests/${invoiceId}/invoice-pdf`, {
+      const response = await fetch(`${ENV.API_BASE_URL}/invoice-requests/${invoiceId}/invoice-pdf`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -450,7 +453,20 @@ function Invoices() {
             >
               <option value="all">All Invoice Types</option>
               <option value="instant">Instant</option>
-              <option value="regular">Regular</option>
+              <option value="regular">Cycle</option>
+            </select>
+            <select
+              value={loanTypeFilter}
+              onChange={(e) => setLoanTypeFilter(e.target.value)}
+              className="table-filter-select"
+            >
+              <option value="all">All Loan Types</option>
+              <option value="Home Loan">Home Loan</option>
+              <option value="Personal Loan">Personal Loan</option>
+              <option value="Business Loan">Business Loan</option>
+              <option value="LAP">LAP</option>
+              <option value="Gold Loan">Gold Loan</option>
+              <option value="Vehicle Loan">Vehicle Loan</option>
             </select>
           </div>
           <div className="table-actions">

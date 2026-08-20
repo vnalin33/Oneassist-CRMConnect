@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
+import { ENV } from '../../env';
 import Logo from '../../components/common/Logo';
 import './Login.css';
 
@@ -27,7 +28,7 @@ function ForgotPassword() {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8086/api/auth/forgot-password', {
+      const response = await fetch(`${ENV.API_BASE_URL}/auth/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
